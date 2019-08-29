@@ -1,4 +1,4 @@
-from calcs import calculate_distance_between_positions, calculate_time_difference_in_milliseconds
+import calcs
 import networkx
 import csv
 
