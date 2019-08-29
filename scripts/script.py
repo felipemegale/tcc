@@ -1,5 +1,13 @@
-from calcs import calculate_distance_between_positions
+from calcs import calculate_distance_between_positions, calculate_time_difference_in_milliseconds
+import networkx
+import csv
 
 
-print(calculate_distance_between_positions(
-    -12.13983536, -77.02355957, -12.13874817, -76.99536133))
+trips = []
+
+with open('csv/uber_peru_2010_formatted_complete_fixed.csv') as trip_file:
+    reader = csv.reader(trip_file, delimiter=";")
+
+    # load to memory the trips from the file
+    for row in reader:
+        trips.append(row)
