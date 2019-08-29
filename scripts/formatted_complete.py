@@ -1,7 +1,7 @@
 import csv
 
-with open('uber_peru_2010_formatted.csv') as file:
-    with open('uber_peru_2010_formatted_complete.csv', 'w') as out_file:
+with open('csv/uber_peru_2010_formatted.csv') as file:
+    with open('csv/uber_peru_2010_formatted_complete.csv', 'w') as out_file:
         reader = csv.reader(file, delimiter=';')
         writer = csv.writer(out_file, delimiter=';')
 
