@@ -5,7 +5,9 @@ from datetime import datetime, timedelta
 # this function returns the distance between the two given
 # geographical coordinates in kilometers
 def calculate_distance_between_positions(geoloc1, geoloc2):
-    return acos(sin(radians(geoloc2[0]))*sin(radians(geoloc1[0])) + cos(radians(geoloc2[0])) * cos(radians(geoloc1[0])) * cos(radians(geoloc1[1] - geoloc2[1]))) * 6371
+    if geoloc1[0] == geoloc2[0] and geoloc1[1] == geoloc2[1]:
+        return 0.0
+    return acos(sin(radians(geoloc2[0])) * sin(radians(geoloc1[0])) + cos(radians(geoloc2[0])) * cos(radians(geoloc1[0])) * cos(radians(geoloc1[1] - geoloc2[1]))) * 6371
 
 
 def calculate_time_difference_in_milliseconds(time1, time2):
