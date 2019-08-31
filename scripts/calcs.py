@@ -19,7 +19,7 @@ def calculate_time_difference_in_milliseconds(time1, time2):
     return int(diff.total_seconds()*1000)
 
 
-def compare_trips_by_time_and_origin(trip_a, trip_b):
+def compatible_by_origin(trip_a, trip_b):
     start_time_trip_a = trip_a[2]
     start_time_trip_b = trip_b[2]
 
@@ -30,3 +30,7 @@ def compare_trips_by_time_and_origin(trip_a, trip_b):
         start_time_trip_a, start_time_trip_b)
     start_loc_dist = calculate_distance_between_positions(
         start_loc_trip_a, start_loc_trip_b)
+
+    if start_time_diff <= 1200000 and start_loc_dist <= 1.5:
+        return True
+    return False
