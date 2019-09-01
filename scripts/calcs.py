@@ -31,8 +31,8 @@ def compatible_by(or_dest, trip_a, trip_b):
         time_trip_a = trip_a[5]
         time_trip_b = trip_b[5]
 
-        loc_trip_a = (trip_a[6], trip_a[7])
-        loc_trip_b = (trip_b[6], trip_b[7])
+        loc_trip_a = (float(trip_a[6]), float(trip_a[7]))
+        loc_trip_b = (float(trip_b[6]), float(trip_b[7]))
 
     else:
         return "You must choose 'origin' or 'destination' as comparison criterion"
@@ -41,8 +41,6 @@ def compatible_by(or_dest, trip_a, trip_b):
         time_trip_a, time_trip_b))
     loc_diff = abs(calc_dist(
         loc_trip_a, loc_trip_b))
-
-    print(time_diff, loc_diff)
 
     if time_diff <= 3600000 and loc_diff <= 1.5:
         return True
