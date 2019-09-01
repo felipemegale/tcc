@@ -7,7 +7,13 @@ from datetime import datetime, timedelta
 def calc_dist(geoloc1, geoloc2):
     if geoloc1[0] == geoloc2[0] and geoloc1[1] == geoloc2[1]:
         return 0.0
-    return acos(sin(radians(geoloc2[0])) * sin(radians(geoloc1[0])) + cos(radians(geoloc2[0])) * cos(radians(geoloc1[0])) * cos(radians(geoloc1[1] - geoloc2[1]))) * 6371
+    else:
+        arg = sin(radians(geoloc2[0])) * sin(radians(geoloc1[0])) + cos(radians(
+            geoloc2[0])) * cos(radians(geoloc1[0])) * cos(radians(geoloc1[1] - geoloc2[1]))
+        if (-1 <= arg <= 1):
+            return acos(arg) * 6371
+        else:
+            return 0.0
 
 
 def calc_time_diff(time1, time2):
