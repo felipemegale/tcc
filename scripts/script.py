@@ -28,9 +28,9 @@ for time in timespan:
             graph_by_origin.add_node(trip[0])
             graph_by_destination.add_node(trip[0])
 
-        for index_i in range(20):
+        for index_i in range(len(trips)):
             trip_a = trips[index_i]
-            for index_j in range(index_i, 20):
+            for index_j in range(index_i, len(trips)):
                 if index_i != index_j:
                     trip_b = trips[index_j]
                     # print(index_i, index_j)
