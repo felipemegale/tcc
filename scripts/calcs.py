@@ -25,7 +25,8 @@ def calc_time_diff(time1, time2):
     return int(diff.total_seconds()*1000)
 
 
-def compatible_by(or_dest, trip_a, trip_b):
+def compatible_by(or_dest, timespan, max_dist, trip_a, trip_b):
+    time_in_ms = timespan*3600*1000
     if or_dest == "origin":
         time_trip_a = trip_a[2]
         time_trip_b = trip_b[2]
@@ -48,6 +49,6 @@ def compatible_by(or_dest, trip_a, trip_b):
     loc_diff = abs(calc_dist(
         loc_trip_a, loc_trip_b))
 
-    if time_diff <= 3600000 and loc_diff <= 1.5:
+    if time_diff <= time_in_ms and loc_diff <= max_dist:
         return True
     return False
