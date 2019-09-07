@@ -1,10 +1,29 @@
 import networkx as nx
-import pygraphviz as pgv
+import os
+from time import strftime, localtime
 
 
-g = nx.read_adjlist("graph_adjlists/graph_by_origin_2_2.adjlist")
-a = nx.nx_agraph.to_agraph(g)
-a.layout(prog='dot')
-print("finished layout")
-a.draw("t1.png")
-print("finished drawing")
+files = os.listdir("graph_adjlists")
+
+for file_name in files:
+    file_path = "graph_adjlists/{}".format(file_name)
+    img_name = "{}png".format(file_name.split('adjlist')[0])
+
+    print("{1} => reading file {0}".format(
+        file_name, strftime("%Y-%m-%d %H:%M:%S", localtime())))
+    g = nx.read_adjlist(file_path)
+    a = nx.nx_agraph.to_agraph(g)
+    print("{1} => finished reading file {0}".format(
+        file_name, strftime("%Y-%m-%d %H:%M:%S", localtime())))
+
+    print("{1} => started layout for file {0}".format(
+        file_name, strftime("%Y-%m-%d %H:%M:%S", localtime())))
+    a.layout()
+    print("{1} => finished layout for file {0}".format(
+        file_name, strftime("%Y-%m-%d %H:%M:%S", localtime())))
+
+    print("{1} => started drawing image {0}".format(
+        img_name, strftime("%Y-%m-%d %H:%M:%S", localtime())))
+    a.draw(img_name)
+    print("{1} => finished drawing image {0}".format(
+        img_name, strftime("%Y-%m-%d %H:%M:%S", localtime())))
