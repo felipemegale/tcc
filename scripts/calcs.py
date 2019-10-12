@@ -52,3 +52,33 @@ def compatible_by(or_dest, timespan, max_dist, trip_a, trip_b):
     if time_diff <= time_in_ms and loc_diff <= max_dist:
         return True
     return False
+
+
+def get_dow_and_time(date_str):
+    return (datetime.strptime(date_str, "%d/%m/%Y %H:%M").weekday(),
+            datetime.strptime(date_str, "%d/%m/%Y %H:%M").hour,
+            )
+
+
+def is_morning(trip_start):
+    if 0 <= trip_start[1] <= 5:
+        return True
+    return False
+
+
+def is_day(trip_start):
+    if 6 <= trip_start[1] <= 11:
+        return True
+    return False
+
+
+def is_noon(trip_start):
+    if 12 <= trip_start[1] <= 17:
+        return True
+    return False
+
+
+def is_night(trip_start):
+    if 18 <= trip_start[1] <= 23:
+        return True
+    return False
