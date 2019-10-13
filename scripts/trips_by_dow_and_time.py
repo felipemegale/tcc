@@ -1,4 +1,6 @@
 import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
 import calcs
 
 
@@ -15,7 +17,6 @@ SATURDAY = 5
 SUNDAY = 6
 
 trips = pd.read_csv("csv/uber_peru_2010_formatted_complete_fixed.csv", sep=';')
-print(trips['journey_id'][0])
 trips_list = trips['journey_id'].tolist()
 starts = list(map(calcs.get_dow_and_time, trips['start_at'].tolist()))
 groups = [
@@ -26,6 +27,13 @@ groups = [
     [[], [], [], []],
     [[], [], [], []],
     [[], [], [], []]
+]
+
+freqs = [
+    [[], [], [], [], [], [], []],
+    [[], [], [], [], [], [], []],
+    [[], [], [], [], [], [], []],
+    [[], [], [], [], [], [], []]
 ]
 
 for trip in range(len(starts)):
@@ -93,3 +101,9 @@ for trip in range(len(starts)):
             groups[SUNDAY][NOON].append(trips_list[trip])
         elif calcs.is_night(curr_start):
             groups[SUNDAY][NIGHT].append(trips_list[trip])
+
+for dow in range(len(groups)):
+    for period in range(len(groups[dow])):
+        freqs[period][dow] = len(groups[dow][period])
+
+print(freqs)
