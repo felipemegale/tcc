@@ -3,7 +3,7 @@ import json
 import requests
 import pandas as pd
 
-url = "https://api.geodir.co/geocoder/geocoder-reverse/v1/findlatlon?y={0}&x={1}&token=b92005e0-814c-414e-8ac9-22c7d8c1ecf2"
+url = "https://api.geodir.co/geocoder/geocoder-reverse/v1/findlatlon?y={0}&x={1}&token=ffaa86b8-e6c5-4b1b-841c-87cc2a804b83"
 
 trips = pd.read_csv("csv/uber_peru_2010_formatted_complete_fixed.csv", sep=';')
 trips_id = trips['journey_id'].tolist()
