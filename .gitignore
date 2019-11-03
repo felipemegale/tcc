@@ -4,5 +4,6 @@ env/
 .DS_Store
 csv/.DS_Store
 csv/dockless_2018.csv
+csv/dockless_2019.csv
 csv/dockless_2018_formatted.csv
 csv/dockless_2018_formatted_complete.csv
