@@ -4,7 +4,8 @@ import pandas as pd
 import json
 import time
 
-url = "https://nominatim.openstreetmap.org/reverse.php?lat={0}&lon={1}&format=json"
+url = "https://us1.locationiq.com/v1/reverse.php"
+api_key = 'ae15ec1cee4ce5'
 
 trips = pd.read_csv("csv/uber_peru_2010_formatted_complete_fixed.csv", sep=';')
 trips_id = trips['journey_id'].tolist()
@@ -17,14 +18,24 @@ ends_district = []
 
 with open("osm_start.out", "w") as osm:
     for i in range(len(trips_id)):
-        req = requests.get(url.format(starts_lat[i], starts_lon[i]))
-        osm.write(trips_id[i]+"\n")
-        osm.write(json.dumps(req.json())+"\n")
-        time.sleep(3)
+        data = {
+            'key': api_key,
+            'lat': starts_lat[i],
+            'lon': starts_lon[i],
+            'format': 'json'
+        }
+        req = requests.get(url, data)
+        osm.writelines(req.text+"\n")
+        time.sleep(9)
 
 with open("osm_end.out", "w") as osm:
     for i in range(len(trips_id)):
-        req = requests.get(url.format(ends_lat[i], ends_lon[i]))
-        osm.write(trips_id[i]+"\n")
-        osm.write(json.dumps(req.json())+"\n")
-        time.sleep(3)
+        data = {
+            'key': api_key,
+            'lat': ends_lat[i],
+            'lon': ends_lon[i],
+            'format': 'json'
+        }
+        req = requests.get(url, data)
+        osm.write(req.text+"\n")
+        time.sleep(9)
