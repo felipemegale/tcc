@@ -27,4 +27,4 @@ with open("osm_end_continue.out", "w") as osm:
         req = requests.get(url, data)
 
         osm.write(req.text+"\n")
-        time.sleep(9)
+        time.sleep(8.5)
