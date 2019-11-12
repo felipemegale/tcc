@@ -43,8 +43,8 @@ with open("osm_start.out") as start:
                 districts.append(dist)
 
         matrix = [[0 for x in range(len(en_districts))] for y in range(len(st_districts))]
-        st_districts.sort()
-        en_districts.sort()
+        st_districts.sort() # 46
+        en_districts.sort() # 128
         
         for i in range(len(st_jsons)):
             if "city" in st_jsons[i]["address"]:
