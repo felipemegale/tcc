@@ -17,8 +17,8 @@ ends_lat = trips['end_lat'].tolist()
 ends_lon = trips['end_lon'].tolist()
 ends_district = []
 
-with open("osm_end_continue.out", "w") as osm:
-    for i in range(15930, len(trips_id)):
+with open("osm_end_part.out", "w") as osm:
+    for i in range(15666, 15930):
         data = {
             'key': api_key,
             'lat': ends_lat[i],
@@ -28,4 +28,4 @@ with open("osm_end_continue.out", "w") as osm:
         req = requests.get(url, data)
         osm.write(req.text+"\n")
         print(trips_id[i] + " - " + str(datetime.now()))
-        time.sleep(8.5)
+        time.sleep(3)
