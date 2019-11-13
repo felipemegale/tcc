@@ -7,9 +7,11 @@ districts = []
 st_districts = []
 en_districts = []
 
+graph = nx.DiGraph()
+
 with open("osm_start.out") as start:
     st_jsons = [json.loads(line) for line in start]
-    
+
     for i in range(0, len(st_jsons)):
         if "city" in st_jsons[i]["address"]:
             if st_jsons[i]["address"]["city"] not in st_districts:
@@ -42,10 +44,14 @@ with open("osm_start.out") as start:
             if dist not in districts:
                 districts.append(dist)
 
-        matrix = [[0 for x in range(len(en_districts))] for y in range(len(st_districts))]
-        st_districts.sort() # 46
-        en_districts.sort() # 128
-        
+        districts.sort()
+        graph.add_nodes_from(districts)
+
+        matrix = [[0 for x in range(len(en_districts))]
+                  for y in range(len(st_districts))]
+        st_districts.sort()  # 46
+        en_districts.sort()  # 128
+
         for i in range(len(st_jsons)):
             if "city" in st_jsons[i]["address"]:
                 start = st_jsons[i]["address"]["city"]
@@ -53,18 +59,22 @@ with open("osm_start.out") as start:
                 start = st_jsons[i]["address"]["town"]
             elif "village" in en_jsons[i]["address"]:
                 start = st_jsons[i]["address"]["village"]
-            
+
             if "city" in en_jsons[i]["address"]:
                 end = en_jsons[i]["address"]["city"]
             elif "town" in en_jsons[i]["address"]:
                 end = en_jsons[i]["address"]["town"]
             elif "village" in en_jsons[i]["address"]:
                 end = en_jsons[i]["address"]["village"]
-            
-            matrix[st_districts.index(start)][en_districts.index(end)] += 1
-        
-        # for row in matrix:
-        #     print(row)
 
-        # od = nx.Graph()
-        # od.add_nodes_from(districts)
+            matrix[st_districts.index(start)][en_districts.index(end)] += 1
+
+            if graph.has_edge(start, end):
+                graph[start][end]['weight'] = graph.get_edge_data(start, end)[
+                    'weight']+1
+            else:
+                graph.add_edge(start, end, weight=1)
+
+for edge in graph.edges:
+    print(edge)
+    print(graph.get_edge_data(*edge))
