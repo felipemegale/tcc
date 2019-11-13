@@ -69,12 +69,16 @@ with open("osm_start.out") as start:
 
             matrix[st_districts.index(start)][en_districts.index(end)] += 1
 
-            if graph.has_edge(start, end):
-                graph[start][end]['weight'] = graph.get_edge_data(start, end)[
-                    'weight']+1
-            else:
-                graph.add_edge(start, end, weight=1)
+            # if graph.has_edge(start, end):
+            #     graph[start][end]['weight'] = graph.get_edge_data(start, end)[
+            #         'weight']+1
+            # else:
+            #     graph.add_edge(start, end, weight=1)
+            graph.add_edge(start, end)
 
+# for edge in graph.edges:
+#     print(edge, graph.get_edge_data(*edge))
 for edge in graph.edges:
     print(edge)
-    print(graph.get_edge_data(*edge))
+
+# print(nx.numeric_assortativity_coefficient(graph, 'weight'))
