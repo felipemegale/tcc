@@ -30,6 +30,13 @@ in_n_out = {district: {'in': 0, 'out': 0} for district in districts}
 matrix = [[0 for x in range(len(en_districts))]
           for y in range(len(st_districts))]
 
+# terei uma nova matriz, onde as linhas sao ou degree
+# e as colunas sao in degree
+# ai eu preciso ter na posicao i,j dessa matriz
+# quantas viagens eu tenho que saem de um vertice de out degree X
+# e chegam em um vertice de in degree Y
+# agora, com essa matriz, eu nao preciso me preocupar com rotulos!!!
+
 st_districts.sort()  # 46
 en_districts.sort()  # 128
 
