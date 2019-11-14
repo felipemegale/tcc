@@ -1,6 +1,5 @@
 import pandas as pd
 import json
-import networkx as nx
 from calcs import get_districts_by_file, get_jsons_by_file, get_column
 
 
@@ -9,7 +8,6 @@ pk1 = []
 pk2 = []
 edges = 0
 
-# graph = nx.DiGraph()
 st_districts = get_districts_by_file("osm_start.out")
 st_jsons = get_jsons_by_file("osm_start.out")
 en_districts = get_districts_by_file("osm_end.out")
@@ -58,12 +56,6 @@ for i in range(len(st_jsons)):
     matrix[st_districts.index(start)][en_districts.index(end)] += 1
     in_n_out[start]['out'] += 1
     in_n_out[end]['in'] += 1
-
-    # if graph.has_edge(start, end):
-    #     graph[start][end]['weight'] = graph.get_edge_data(start, end)[
-    #         'weight']+1
-    # else:
-    #     graph.add_edge(start, end, weight=1)
 
 for i in range(len(matrix)):
     for j in range(len(matrix[0])):
