@@ -1,5 +1,6 @@
 from math import acos, sin, radians, cos
 from datetime import datetime, timedelta
+import json
 
 
 # this function returns the distance between the two given
@@ -82,3 +83,31 @@ def is_night(trip_start):
     if 18 <= trip_start[1] <= 23:
         return True
     return False
+
+
+def get_jsons_by_file(file_name):
+    with open(file_name) as f:
+        jsons = [json.loads(line) for line in f]
+        return jsons
+
+
+def get_districts_by_file(file_name):
+    districts = []
+    with open(file_name) as f:
+        jsons = [json.loads(line) for line in f]
+
+        for i in range(0, len(jsons)):
+            if "city" in jsons[i]["address"]:
+                if jsons[i]["address"]["city"] not in districts:
+                    districts.append(jsons[i]["address"]["city"])
+            elif "town" in jsons[i]["address"]:
+                if jsons[i]["address"]["town"] not in districts:
+                    districts.append(jsons[i]["address"]["town"])
+            elif "village" in jsons[i]["address"]:
+                if jsons[i]["address"]["village"] not in districts:
+                    districts.append(jsons[i]["address"]["village"])
+    return districts
+
+
+def get_column(matrix, index):
+    return [row[index] for row in matrix]

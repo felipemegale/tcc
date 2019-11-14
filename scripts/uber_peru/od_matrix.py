@@ -1,84 +1,80 @@
 import pandas as pd
 import json
 import networkx as nx
+from calcs import get_districts_by_file, get_jsons_by_file, get_column
 
 
 districts = []
-st_districts = []
-en_districts = []
+pk1 = []
+pk2 = []
+edges = 0
 
-graph = nx.DiGraph()
+# graph = nx.DiGraph()
+st_districts = get_districts_by_file("osm_start.out")
+st_jsons = get_jsons_by_file("osm_start.out")
+en_districts = get_districts_by_file("osm_end.out")
+en_jsons = get_jsons_by_file("osm_end.out")
 
-with open("osm_start.out") as start:
-    st_jsons = [json.loads(line) for line in start]
+# all districts list
+for dist in en_districts:
+    districts.append(dist)
+for dist in st_districts:
+    if dist not in districts:
+        districts.append(dist)
 
-    for i in range(0, len(st_jsons)):
-        if "city" in st_jsons[i]["address"]:
-            if st_jsons[i]["address"]["city"] not in st_districts:
-                st_districts.append(st_jsons[i]["address"]["city"])
-        elif "town" in st_jsons[i]["address"]:
-            if st_jsons[i]["address"]["town"] not in st_districts:
-                st_districts.append(st_jsons[i]["address"]["town"])
-        elif "village" in st_jsons[i]["address"]:
-            if st_jsons[i]["address"]["village"] not in st_districts:
-                st_districts.append(st_jsons[i]["address"]["village"])
+districts.sort()
+# graph.add_nodes_from(districts)
 
-    with open("osm_end.out") as end:
-        en_jsons = [json.loads(line) for line in end]
+matrix = [[0 for x in range(len(en_districts))]
+          for y in range(len(st_districts))]
 
-        for i in range(0, len(en_jsons)):
-            if "city" in en_jsons[i]["address"]:
-                if en_jsons[i]["address"]["city"] not in en_districts:
-                    en_districts.append(en_jsons[i]["address"]["city"])
-            elif "town" in en_jsons[i]["address"]:
-                if en_jsons[i]["address"]["town"] not in en_districts:
-                    en_districts.append(en_jsons[i]["address"]["town"])
-            elif "village" in en_jsons[i]["address"]:
-                if en_jsons[i]["address"]["village"] not in en_districts:
-                    en_districts.append(en_jsons[i]["address"]["village"])
+st_districts.sort()  # 46
+en_districts.sort()  # 128
 
-        # all districts list
-        for dist in en_districts:
-            districts.append(dist)
-        for dist in st_districts:
-            if dist not in districts:
-                districts.append(dist)
+for i in range(len(st_jsons)):
+    if "city" in st_jsons[i]["address"]:
+        start = st_jsons[i]["address"]["city"]
+    elif "town" in st_jsons[i]["address"]:
+        start = st_jsons[i]["address"]["town"]
+    elif "village" in en_jsons[i]["address"]:
+        start = st_jsons[i]["address"]["village"]
 
-        districts.sort()
-        graph.add_nodes_from(districts)
+    if "city" in en_jsons[i]["address"]:
+        end = en_jsons[i]["address"]["city"]
+    elif "town" in en_jsons[i]["address"]:
+        end = en_jsons[i]["address"]["town"]
+    elif "village" in en_jsons[i]["address"]:
+        end = en_jsons[i]["address"]["village"]
 
-        matrix = [[0 for x in range(len(en_districts))]
-                  for y in range(len(st_districts))]
-        st_districts.sort()  # 46
-        en_districts.sort()  # 128
+    matrix[st_districts.index(start)][en_districts.index(end)] += 1
 
-        for i in range(len(st_jsons)):
-            if "city" in st_jsons[i]["address"]:
-                start = st_jsons[i]["address"]["city"]
-            elif "town" in st_jsons[i]["address"]:
-                start = st_jsons[i]["address"]["town"]
-            elif "village" in en_jsons[i]["address"]:
-                start = st_jsons[i]["address"]["village"]
+    # if graph.has_edge(start, end):
+    #     graph[start][end]['weight'] = graph.get_edge_data(start, end)[
+    #         'weight']+1
+    # else:
+    #     graph.add_edge(start, end, weight=1)
 
-            if "city" in en_jsons[i]["address"]:
-                end = en_jsons[i]["address"]["city"]
-            elif "town" in en_jsons[i]["address"]:
-                end = en_jsons[i]["address"]["town"]
-            elif "village" in en_jsons[i]["address"]:
-                end = en_jsons[i]["address"]["village"]
+for i in range(len(matrix)):
+    for j in range(len(matrix[0])):
+        edges += matrix[i][j]
 
-            matrix[st_districts.index(start)][en_districts.index(end)] += 1
+prob_matrix = [[0 for x in range(len(en_districts))]
+               for y in range(len(st_districts))]
 
-            # if graph.has_edge(start, end):
-            #     graph[start][end]['weight'] = graph.get_edge_data(start, end)[
-            #         'weight']+1
-            # else:
-            #     graph.add_edge(start, end, weight=1)
-            graph.add_edge(start, end)
+# calcula valores na matriz de probabilidades
+for i in range(len(matrix)):
+    for j in range(len(matrix[0])):
+        prob_matrix[i][j] = matrix[i][j]/edges
 
-# for edge in graph.edges:
-#     print(edge, graph.get_edge_data(*edge))
-for edge in graph.edges:
-    print(edge)
+# calcula Pk1
+for row in prob_matrix:
+    pk1.append(sum(row))
 
-# print(nx.numeric_assortativity_coefficient(graph, 'weight'))
+# calcula Pk2
+for i in range(len(prob_matrix[0])):
+    pk2.append(sum(get_column(prob_matrix, i)))
+
+# calcular R(k1,k2) = k1*k2 * (P(k1,k2) - P(k1)*P(k2))
+# mas quem sao k1 e k2? no exemplo da aula são os graus dos vertices
+# só se eu converter o nome do distrito no indice dele na lista
+# mas ai distritos com Z ou perto do Z terao R(k1,k2) maiores... (ou menores)
