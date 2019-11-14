@@ -95,7 +95,8 @@ for i in range(len(matrix)):
     for j in range(len(matrix[0])):
         k1 = in_n_out[en_districts[j]]['in']
         k2 = in_n_out[st_districts[i]]['out']
-        pk1k2 = prob_matrix[st_districts.index(i)][en_districts.index(j)]
+        pk1k2 = prob_matrix[i][j]
         _pk1 = pk1[i]
         _pk2 = pk2[j]
         rk1k2 += k1*k2*(pk1k2 - _pk1*_pk2)
+
