@@ -1,7 +1,9 @@
 import pandas as pd
+import numpy as np
 import json
 from calcs import get_districts_by_file, get_jsons_by_file, get_column
 from time import sleep
+from math import sqrt
 
 
 districts = []
@@ -139,10 +141,51 @@ for i in range(len(matrix_innout)):
 print("CALCULATING RK1K2... OK")
 sleep(0.5)
 
-print("CALCULATING AVERAGE...")
+# calculado para out degrees... tem que calcular para in degrees?
+print("CALCULATING OUT DEGREE AVERAGE...")
 avg_sum = 0
 for i in range(len(matrix_innout)):
     avg_sum += sum(matrix_innout[i])*i
-avg = avg_sum/edges
-print("CALCULATING AVERAGE... OK")
+out_avg = avg_sum/edges
+print("CALCULATING OUT DEGREE AVERAGE... OK")
 sleep(0.5)
+
+print("CALCULATING IN DEGREE AVERAGE...")
+avg_sum = 0
+transposed = np.transpose(matrix_innout)
+for i in range(len(transposed)):
+    avg_sum += sum(transposed[i])*i
+in_avg = avg_sum/edges
+print("CALCULATING IN DEGREE AVERAGE... OK")
+sleep(0.5)
+
+print("CALCULATING OUT DEGREE VARIANCE...")
+var_sum = 0
+for i in range(len(matrix_innout)):
+    var_sum += sum(matrix_innout[i])*(i - out_avg)**2
+out_var = var_sum/edges
+print("CALCULATING OUT DEGREE VARIANCE... OK")
+sleep(0.5)
+
+print("CALCULATING IN DEGREE VARIANCE...")
+var_sum = 0
+for i in range(len(transposed)):
+    var_sum += sum(transposed[i])*(i - in_avg)**2
+in_var = var_sum/edges
+print("CALCULATING IN DEGREE VARIANCE... OK")
+sleep(0.5)
+
+print("CALCULATING OUT DEGREE STD DEVIATION...")
+out_std_dev = sqrt(out_var)
+print("CALCULATING OUT DEGREE STD DEVIATION... OK")
+sleep(0.5)
+
+print("CALCULATING IN DEGREE STD DEVIATION...")
+in_std_dev = sqrt(in_var)
+print("CALCULATING IN DEGREE STD DEVIATION... OK")
+sleep(0.5)
+
+print("CALCULATING ASSORTATIVITY...")
+assortativity = 1/(in_std_dev*out_std_dev) * rk1k2
+print("CALCULATING ASSORTATIVITY... OK")
+print(assortativity)
