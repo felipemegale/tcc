@@ -176,8 +176,8 @@ sleep(0.5)
 
 print("CALCULATING ASSORTATIVITY...")
 assortativity = 1/(in_std_dev*out_std_dev) * rk1k2
-print("CALCULATING ASSORTATIVITY... OK", end="\n\n")
-print(assortativity, end="\n\n")
+print("CALCULATING ASSORTATIVITY... OK")
+sleep(0.5)
 
 print("RANKING OUT DEGREES...")
 out_values = [in_n_out[dist]['out'] for dist in in_n_out]
@@ -196,6 +196,19 @@ print("RANKING IN DEGREES... OK")
 sleep(0.5)
 
 print("CALCULATING DIFFERENCE BETWEEN IN RANK AND OUT RANK...")
-
+rank_diffs = [out_rank[i] - in_rank[i] for i in range(len(out_rank))]
 print("CALCULATING DIFFERENCE BETWEEN IN RANK AND OUT RANK... OK")
 sleep(0.5)
+
+print("CALCULATING SQUARED DIFFERENCES...")
+sqr_rank_diffs = [item**2 for item in rank_diffs]
+print("CALCULATING SQUARED DIFFERENCES... OK")
+sleep(0.5)
+
+print("CALCULATING SPEARMANS CORRELATION...")
+rs = 1 - ((6*sum(sqr_rank_diffs))/(len(out_values)*(len(out_values)**2-1)))
+print("CALCULATING SPEARMANS CORRELATION... OK")
+sleep(0.5)
+
+print("Assortativity", assortativity)
+print("Spearmans correlation", rs)
