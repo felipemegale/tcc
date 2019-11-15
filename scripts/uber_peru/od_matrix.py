@@ -20,7 +20,6 @@ print("LOADING FILES... OK")
 sleep(0.5)
 
 print("APPENDING DISTRICTS...")
-# all districts list
 for dist in en_districts:
     districts.append(dist)
 for dist in st_districts:
@@ -36,14 +35,6 @@ matrix = [[0 for x in range(len(en_districts))]
           for y in range(len(st_districts))]
 print("CREATING IN_N_OUT AND MATRIX... OK")
 sleep(0.5)
-
-# OK terei uma nova matriz, onde as linhas sao out degree e as colunas sao in degreeß
-
-# ai eu preciso ter na posicao i,j dessa matriz
-# quantas viagens eu tenho que saem de um vertice de out degree X
-# e chegam em um vertice de in degree Y
-
-# agora, com essa matriz, eu nao preciso me preocupar com rotulos!!!
 
 print("SORTING ST AND EN DISTRICTS...")
 st_districts.sort()  # 46
@@ -72,7 +63,6 @@ print("ADDING INFO TO IN_N_OUT AND MATRIX... OK")
 sleep(0.5)
 
 print("FINDING LARGEST IN AND OUT DEGREES...")
-# get largest out degree and in degree
 max_out = 0
 max_in = 0
 for item in in_n_out:
@@ -141,7 +131,6 @@ for i in range(len(matrix_innout)):
 print("CALCULATING RK1K2... OK")
 sleep(0.5)
 
-# calculado para out degrees... tem que calcular para in degrees?
 print("CALCULATING OUT DEGREE AVERAGE...")
 avg_sum = 0
 for i in range(len(matrix_innout)):
@@ -187,5 +176,26 @@ sleep(0.5)
 
 print("CALCULATING ASSORTATIVITY...")
 assortativity = 1/(in_std_dev*out_std_dev) * rk1k2
-print("CALCULATING ASSORTATIVITY... OK")
-print(assortativity)
+print("CALCULATING ASSORTATIVITY... OK", end="\n\n")
+print(assortativity, end="\n\n")
+
+print("RANKING OUT DEGREES...")
+out_values = [in_n_out[dist]['out'] for dist in in_n_out]
+out_sort = [item for item in out_values]
+out_sort.sort()
+out_rank = [out_sort.index(item) for item in out_values]
+print("RANKING OUT DEGREES... OK")
+sleep(0.5)
+
+print("RANKING IN DEGREES...")
+in_values = [in_n_out[dist]['in'] for dist in in_n_out]
+in_sort = [item for item in in_values]
+in_sort.sort()
+in_rank = [in_sort.index(item) for item in in_values]
+print("RANKING IN DEGREES... OK")
+sleep(0.5)
+
+print("CALCULATING DIFFERENCE BETWEEN IN RANK AND OUT RANK...")
+
+print("CALCULATING DIFFERENCE BETWEEN IN RANK AND OUT RANK... OK")
+sleep(0.5)
