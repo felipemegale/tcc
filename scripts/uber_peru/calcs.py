@@ -55,6 +55,26 @@ def compatible_by(or_dest, timespan, max_dist, trip_a, trip_b):
     return False
 
 
+def compatible_by_space(or_dest, max_dist, trip_a, trip_b):
+    if or_dest == "origin":
+        loc_trip_a = (float(trip_a[3]), float(trip_a[4]))
+        loc_trip_b = (float(trip_b[3]), float(trip_b[4]))
+
+    elif or_dest == "destination":
+        loc_trip_a = (float(trip_a[6]), float(trip_a[7]))
+        loc_trip_b = (float(trip_b[6]), float(trip_b[7]))
+
+    else:
+        return "You must choose 'origin' or 'destination' as comparison criterion"
+
+    loc_diff = abs(calc_dist(
+        loc_trip_a, loc_trip_b))
+
+    if loc_diff <= max_dist:
+        return True
+    return False
+
+
 def get_dow_and_time(date_str):
     return (datetime.strptime(date_str, "%d/%m/%Y %H:%M").weekday(),
             datetime.strptime(date_str, "%d/%m/%Y %H:%M").hour,
