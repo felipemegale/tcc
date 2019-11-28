@@ -3,14 +3,13 @@ import matplotlib.pyplot as plt
 import os
 
 
-files = sorted(os.listdir("graph_adjlists"))
-graph_names = ["0.5h\n0.5km", "0.5h\n1.0km", "0.5h\n2.0km", "1.0h\n0.5km",
-               "1.0h\n1.0km", "1.0h\n2.0km", "2.0h\n0.5km", "2.0h\n1.0km", "2.0h\n2.0km"]
+files = sorted(os.listdir("graph_adjlists/space"))
+graph_names = ["0.5km", "1.0km", "2.0km"]
 densities_origin = []
 densities_destination = []
 
 for file_name in files:
-    file_path = "graph_adjlists/{}".format(file_name)
+    file_path = "graph_adjlists/space/{}".format(file_name)
 
     graph = nx.read_adjlist(file_path)
 
@@ -24,11 +23,11 @@ plt.bar(graph_names, densities_origin, width=0.4, color="xkcd:azure")
 plt.title("Densities - Combination by Origin")
 plt.ylabel("Density")
 plt.xlabel("Combination")
-plt.savefig("images/densities-origin.png")
+plt.savefig("images/densities-origin-space.png")
 
 plt.figure(figsize=(7.3, 5.5))
 plt.bar(graph_names, densities_destination, width=0.4, color="xkcd:azure")
 plt.title("Densities - Combination by Destination")
 plt.ylabel("Density")
 plt.xlabel("Combination")
-plt.savefig("images/densities-destination.png")
+plt.savefig("images/densities-destination-space.png")
