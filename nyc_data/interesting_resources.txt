@@ -1,0 +1,7 @@
+Pandas
+Geopandas (print world map)
+Matplotlib
+https://towardsdatascience.com/the-easiest-way-to-plot-data-from-pandas-on-a-world-map-1a62962a27f3
+https://github.com/udiy/blogposts/tree/main/Easy%20map
+https://github.com/toddwschneider/nyc-taxi-data/blob/master/setup_files/raw_data_urls.txt
+https://toddwschneider.com/posts/analyzing-1-1-billion-nyc-taxi-and-uber-trips-with-a-vengeance/#annotations:8223372
