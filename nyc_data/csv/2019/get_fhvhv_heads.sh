@@ -1,6 +1,7 @@
 #!/bin/bash
 
-head fhvhv_tripdata_2019-01.csv > head_fhvhv_tripdata_2019-01.csv
+# there is no fhvhv data for Jan 2019
+# head fhvhv_tripdata_2019-01.csv > head_fhvhv_tripdata_2019-01.csv
 head fhvhv_tripdata_2019-02.csv > head_fhvhv_tripdata_2019-02.csv
 head fhvhv_tripdata_2019-03.csv > head_fhvhv_tripdata_2019-03.csv
 head fhvhv_tripdata_2019-04.csv > head_fhvhv_tripdata_2019-04.csv
