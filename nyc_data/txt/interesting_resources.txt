@@ -6,3 +6,6 @@ https://toddwschneider.com/posts/analyzing-1-1-billion-nyc-taxi-and-uber-trips-w
 data source main page: https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page
 data source page: https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page
 idea: explore how covid impacted nyc residents' routines
+pyspark tutos:
+	https://sparkbyexamples.com/pyspark/pyspark-read-csv-file-into-dataframe/
+	https://sparkbyexamples.com/pyspark/pyspark-what-is-sparksession/
