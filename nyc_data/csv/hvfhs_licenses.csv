@@ -1,5 +1,5 @@
-hvfhs_license_num,company_name
-HV0002,Juno
-HV0003,Uber
-HV0004,Via
-HV0003,Lyft
+hvfhs_license_num,company_name,company_color
+HV0002,Juno,#29509F
+HV0003,Uber,#000000
+HV0004,Via,#2AB6E6
+HV0005,Lyft,#E867CB
